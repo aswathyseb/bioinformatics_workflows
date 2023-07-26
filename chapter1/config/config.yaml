@@ -1,0 +1,25 @@
+data:
+  sample_sheet: config/samples.csv
+  # Library can be PE or SE
+  library: PE
+
+aligner:
+  tool: bwa
+  aln_flags: ""
+
+sam:
+  sam_flags: ""
+
+vcf:
+  pileup_flags: -d 100
+  call_flags: --ploidy 2
+
+# Run time parameters
+genome: refs/genome.fa
+ref_dir: refs
+idx_dir: refs/idx
+aln_dir: results/bam
+vcf_dir: results/vcf
+# VCF call type can be multi-sample or sample-vcf
+vcf_type: multi-sample
+ncpu: 4
