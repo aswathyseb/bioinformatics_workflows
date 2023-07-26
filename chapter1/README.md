@@ -1,10 +1,10 @@
-#### Description
+## Chapter1 - Workflows
 
 Chapter1 gives an overview of different bioinformatics workflows and its comparison.
 	
- Here variant calling is described using different workflows such as Ruffus, Snakemake, and GNU Make.
+Here variant calling is described using different workflows such as Ruffus, Snakemake, and GNU Make.
 
- All workflows use 
+All workflows use 
   
 * data in `data` directory
 * reference in `refs` directory
