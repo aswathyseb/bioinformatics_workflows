@@ -2,9 +2,14 @@
 
 The worklows and scripts used in the assembly of P.yoelii 17XNL strain and annotation of its gene models are here.
 
-The workflow Makefiles are here. All the accessory scripts are in `src` folder.
+The workflow Makefiles are
 
-**Nanopore genome assembly**
+1. Makefile.ont
+2. Makefile.pacbio
+
+All the accessory scripts are in `src` folder.
+
+**Nanopore-Illumina hybrid genome assembly**
 
 
     make -f Makefile.ont 
