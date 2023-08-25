@@ -2,7 +2,7 @@
 
 Chapter1 gives an overview of different bioinformatics workflows and its comparison.
 	
-Here variant calling is described using different workflows such as Ruffus, Snakemake, and GNU Make.
+As an example variant calling is described using different workflows such as Ruffus, Snakemake, and GNU Make.
 
 All workflows use 
   

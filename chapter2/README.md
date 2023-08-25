@@ -4,8 +4,8 @@ The worklows and scripts used in the assembly of P.yoelii 17XNL strain and annot
 
 The workflow Makefiles are
 
-1. Makefile.ont
-2. Makefile.pacbio
+1. Makefile.ont - used in hybrid genome assembly
+2. Makefile.pacbio - used in pacbio genome assembly
 
 All the accessory scripts are in `src` folder.
 
