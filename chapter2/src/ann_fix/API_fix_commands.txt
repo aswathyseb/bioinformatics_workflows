@@ -1,0 +1,38 @@
+
+#Step1 : Generate a combined braker2 and prokka gff3
+bash fix_ann.sh
+
+# Step2: Manually fixed rpoB, rpoC1, rpoC2 and rpoC2_1 based on prokka
+# Used only prokka based predictions for these genes.
+
+cat API_fix_hybrid.gff3 | grep -v "rpoB" | grep -v "rpoC" >tmp.gff3
+cat rpoB_hybrid.gff3 rpoC1_hybrid.gff3 rpoC2_1_hybrid.gff3 rpoC2_2_hybrid.gff3 >>tmp.gff3
+mv tmp.gff3 API_fix_hybrid.gff3
+
+# Modify original gff3 file
+cat ../braker2_hybrid/braker2_ann.gff3 |  grep -v "Py17XNL_API" >tmp.gff3
+cat tmp.gff3 API_fix_hybrid.gff3 >17XNL_PSU_hybrid.gff3
+
+
+cat API_fix_nano.gff3 | grep -v "rpoB" | grep -v "rpoC" >tmp.gff3
+cat rpoB_nano.gff3 rpoC1_nano.gff3 rpoC2_1_nano.gff3 rpoC2_2_nano.gff3 >>tmp.gff3
+mv tmp.gff3 API_fix_nano.gff3
+
+# Modify original gff3 file
+cat ../braker2_nano/braker2_ann.gff3 |  grep -v "Py17XNL_API" >tmp.gff3
+cat tmp.gff3 API_fix_nano.gff3 >17XNL_PSU_nano.gff3
+
+# Modify hybrid protein fasta file
+cat 17XNL_PSU_hybrid_proteins.fa | grep ">" | grep -v Py17XNL_API | sed 's/>//' >list.txt
+seqtk subseq -l 60 17XNL_PSU_hybrid_proteins.fa list.txt >list.fa
+cat list.fa API_fix_hybrid_proteins.fa >17XNL_PSU_hybrid_proteins.fa 
+
+# Modify hybrid cds fasta file
+cat 17XNL_PSU_hybrid_cds.fa | grep ">" | grep -v Py17XNL_API | sed 's/>//' >list.txt
+seqtk subseq -l 60 17XNL_PSU_hybrid_cds.fa list.txt >list.fa
+cat list.fa API_fix_hybrid_cds.fa >17XNL_PSU_hybrid_cds.fa
+
+# Modify hybrid transcript fasta file
+cat 17XNL_PSU_hybrid_transcript.fa | grep ">" | grep -v Py17XNL_API | sed 's/>//' >list.txt
+seqtk subseq -l 60 17XNL_PSU_hybrid_transcript.fa list.txt >list.fa
+cat list.fa API_fix_hybrid_transcript.fa >17XNL_PSU_hybrid_transcript.fa

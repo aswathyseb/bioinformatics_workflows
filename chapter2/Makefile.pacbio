@@ -1,0 +1,72 @@
+
+DATA ?= reads
+SUBREADS ?= ${DATA}/subreads.bam
+CCSREADS ?= ${DATA}/ccs.bam
+CCS ?= ${DATA}/ccs.fq
+GENOME_SIZE ?= 23m
+DATA_TYPE ?= pacbio-hifi
+NCPU ?= 6
+MIN_PASS ?= 3
+OUT ?= asm
+CANU_OUT ?= ${OUT}/canu_assembly
+CANU_FA ?= ${OUT}/17XNL_PSU_v1.fa
+ASM_PREFIX ?= 17XNL_PSU
+CANU_V2 ?= ${OUT}/17XNL_PSU_v2.fa
+
+REF ?= refs/Py17X_Genome.fasta
+SRC ?= src/pacbio_asm
+
+
+# Makefile customizations.
+.RECIPEPREFIX = >
+.DELETE_ON_ERROR:
+.ONESHELL:
+MAKEFLAGS += --warn-undefined-variables --no-print-directory
+
+# Print usage information.
+usage::
+> @echo "#"
+> @echo "# Makefile.pacbio.mk: Create Pacbio genome assembly with canu"
+> @echo "#"
+> @echo "# make all READS=${DATA} GENOME_SIZE=${GENOME_SIZE} REF=${REF}"
+> @echo "#"
+> @echo "# READS : Data folder with pacbio subreads"
+> @echo "# GENOME_SIZE : Estimated genome size"
+> @echo "# REF: Reference genome"
+> @echo "# "
+> @echo "# The final output is selected contigs based on reference alignment."
+> @echo "#"
+
+# Generate ccs reads
+${CCS}:${SUBREADS}
+>ccs --num-threads ${NCPU} --min-passes ${MIN_PASS} ${SUBREADS} ${CCSREADS}
+>samtools fastq ${CCSREADS} >${CCS}
+
+#Make genome assembly with canu assembler
+${CANU_FA}:${CCS}
+>canu -p pacbio_canu genomeSize=23m -${DATA_TYPE} ${CCS} -d ${CANU_OUT}
+>cp ${CANU_OUT}/pacbio_canu.contigs.fasta ${CANU_FA} 
+
+${CANU_V2}:${CANU_FA} ${REF}
+# Extract primary aligned contigs that has a aligned region% >CUTOFF
+>bash ${SRC}/assign.sh ${CANU_FA} ${REF} ${ASM_PREFIX} >${OUT}/17XNL_PSU_coverages.txt 
+>cat ${OUT}/17XNL_PSU_coverages.txt |cut -f 1 >${OUT}/selected_contigs.txt
+# Modify chromosome names.
+>seqtk subseq -l 60 ${CANU_FA} ${OUT}/selected_contigs.txt >${OUT}/selected_contigs.fa
+#>samtools faidx ${CANU_FA} -r ${OUT}/selected_contigs.txt >${OUT}/selected_contigs.fa
+>python ${SRC}/modify_header.py ${OUT}/selected_contigs.fa ${OUT}/17XNL_PSU_coverages.txt |seqtk seq -A -l 60 > ${OUT}/17XNL_PSU_v2.fa
+>samtools faidx ${OUT}/17XNL_PSU_v2.fa
+
+ccs:${CCS}
+>ls -l ${CCS}
+
+canu_asm:${CANU_FA}
+>ls -l ${CANU_FA}
+
+asm_mod:${CANU_V2}
+>ls -l ${CANU_V2}
+
+all:${CANU_V2}
+>ls -l ${CANU_V2}
+
+
