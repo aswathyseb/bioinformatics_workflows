@@ -19,7 +19,7 @@ GENOME_SIZE ?= 23m
 TRIM_OUT ?= reads/trimmed.fq
 
 # Folder with scripts
-SRC ?= src
+SRC ?= src/ont_asm
 
 # Flye output directory
 FLYE_DIR ?= flye_out

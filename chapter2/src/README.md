@@ -1,14 +1,16 @@
-scripts: folder containing all commands used in the generation of P.yoelii 17XNL agenome assembly and annotation.
+This folder contains  the commands used in the generation of P.yoelii 17XNL agenome assembly and annotation.
 
-Makefile.pacbio : commands  used in Pacbio genome assembly and annotation.
+Makefile.pacbio : commands  used in Pacbio genome assembly
 
-Makefile.ont : commands used in the nanopore genome assembly and annotation.
+Makefile.ont : commands used in the nanopore genome assembly
+
+Makefile.ont : General commands for mapping, variant calling etc.
 
 1) run/ : contains shell scripts used in the analysis. These scripts uses accessory code that are in other subfolders under scripts/
 
 2) ann_fix/ : contains commands used to make modifications to the braker annotation output files.
 
-3) asm_mod/ : scripts used to make modifications to canu output assembly.
+3) pacbio_asm/ : scripts used to make modifications to canu output assembly.
 
 4) ncRNA/ : scripts used to find and add non-coding RNAs to annotation
 
