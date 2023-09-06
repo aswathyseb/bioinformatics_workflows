@@ -4,26 +4,26 @@
 This folder contains  the commands used in the generation of P.yoelii 17XNL agenome assembly and annotation.
 
 
-**run/** : contains shell scripts used in the analysis. These scripts uses accessory code that are in other subfolders under scripts/
+**run** : contains shell scripts used in the analysis. These scripts uses accessory code that are in other subfolders under scripts/
 
-**ann_fix/** : contains commands used to make modifications to the braker annotation output files.
+**ann_fix** : contains commands used to make modifications to the braker annotation output files.
 
-**pacbio_asm/** : scripts used to make modifications to canu output assembly.
+**pacbio_asm** : scripts used to make modifications to canu output assembly.
 
-**ncRNA/** : scripts used to find and add non-coding RNAs to annotation
+**ncRNA** : scripts used to find and add non-coding RNAs to annotation
 
-**rblast/** : scripts used in the reciprocal blast based annotation.
+**rblast** : scripts used in the reciprocal blast based annotation.
 
-**ont_asm/** : scripts used in the Nanopore based genome assembly
+**ont_asm** : scripts used in the Nanopore based genome assembly
 
-**cons/** : scripts used on consensus genome generation.
+**cons** : scripts used on consensus genome generation.
 
-**misc/** : miscelanious scripts used in various steps of the analysis.
+**misc** : miscelanious scripts used in various steps of the analysis.
 
 
 Description of scripts in each folder is given below.
 
-**run/** 
+**run** 
 
 This folder contains the wrapper scripts that needs to be run. It uses the accessory scripts in other subfolders under scripts/
 
@@ -40,7 +40,7 @@ This folder contains the wrapper scripts that needs to be run. It uses the acces
 11) utr_len.sh : commands for generating UTR length table.
 12) submission.sh : commands useful for preparing GFF3 file for genbank submission
 
-**ncRNA/**
+**ncRNA**
 
 This folder contains scripts used in generating ncRNA annotations
 
@@ -51,7 +51,7 @@ This folder contains scripts used in generating ncRNA annotations
 5) best.py : extracts the best blast hit.
 5) get_last_gid.py : extracts the geneid of the last gene in each chromosome
 
-**ann_fix/**
+**ann_fix**
 
 This folder contains the commands and scripts used in modifying annotation
 
@@ -60,7 +60,7 @@ This folder contains the commands and scripts used in modifying annotation
 3) API_fix_commands.txt  : commands used in fixing apicoplast annotations by combining braker2 and prokka predictions.
 4) MIT_fix_commands.txt  :commands used in fixing mitochondria annotations by combining braker2 and prokka predictions.
 
-**rblast/**
+**rblast**
 
 This folder contains the accessory scripts to create reciprocal blast based annotation
 
@@ -71,7 +71,7 @@ This folder contains the accessory scripts to create reciprocal blast based anno
 5) extract_best_gname.py : creates a table with the best reciprocal hit that was used in annotating gene names
 6) annotate_augustus_gff.py : used to create an annotated braker2 file using the results formreciprocal blast
 
-**ont_asm/**
+**ont_asm**
 
 This folder contains scripts used in generation Nanopore assembly.
 
@@ -81,7 +81,7 @@ This folder contains scripts used in generation Nanopore assembly.
 4) extra_commands.txt : miscellanious commands used in creating the final assembly
 
 
-**asm_mod/**
+**asm_mod**
 
 This folder contains the scripts used in modifying the canu assembly output.
 
@@ -93,13 +93,13 @@ This folder contains the scripts used in modifying the canu assembly output.
 6) mt_correct.sh : creates a single copy of MIT
 7) modify_header.py : modifies fasta header
 
-**cons/** 
+**cons** 
 
 This folder contains the scripts used in generating consensus genome assembly
 
 1)consensus.py : script that produces consensus genome
 
-**misc/**
+**misc**
 
 This folder contains the miscellanious scripts
 
