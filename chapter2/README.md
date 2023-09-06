@@ -6,7 +6,7 @@ The workflow Makefiles are
 
 1. Makefile.ont - used in hybrid genome assembly
 2. Makefile.pacbio - used in pacbio genome assembly
-3. Makefile.ont - contains common operations like mapping, variant calling etc.
+3. Makefile.common - used for general tasks like mapping, variant calling etc.
 
 All the accessory scripts are in `src` folder.
 
