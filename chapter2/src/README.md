@@ -1,26 +1,29 @@
+
+#### Scripts
+
 This folder contains  the commands used in the generation of P.yoelii 17XNL agenome assembly and annotation.
 
-Makefile.pacbio : commands  used in Pacbio genome assembly
+**Makefile.pacbio:** commands  used in Pacbio genome assembly
 
-Makefile.ont : commands used in the nanopore genome assembly
+**Makefile.ont:** commands used in the nanopore genome assembly
 
-Makefile.ont : General commands for mapping, variant calling etc.
+**Makefile.ont:** General commands for mapping, variant calling etc.
 
-1) run/ : contains shell scripts used in the analysis. These scripts uses accessory code that are in other subfolders under scripts/
+**run/** : contains shell scripts used in the analysis. These scripts uses accessory code that are in other subfolders under scripts/
 
-2) ann_fix/ : contains commands used to make modifications to the braker annotation output files.
+**ann_fix/** : contains commands used to make modifications to the braker annotation output files.
 
-3) pacbio_asm/ : scripts used to make modifications to canu output assembly.
+**pacbio_asm/** : scripts used to make modifications to canu output assembly.
 
-4) ncRNA/ : scripts used to find and add non-coding RNAs to annotation
+**ncRNA/** : scripts used to find and add non-coding RNAs to annotation
 
-5) rblast/ : scripts used in the reciprocal blast based annotation.
+**rblast/** : scripts used in the reciprocal blast based annotation.
 
-6) ont_asm : scripts used in the Nanopore based genome assembly
+**ont_asm/** : scripts used in the Nanopore based genome assembly
 
-7) cons : scripts used on consensus genome generation.
+**cons/** : scripts used on consensus genome generation.
 
-8) misc : miscelanious scripts used in various steps of the analysis.
+**misc/** : miscelanious scripts used in various steps of the analysis.
 
 
 Description of scripts in each folder is given below.
@@ -63,8 +66,8 @@ This folder contains the commands and scripts used in modifying annotation
 rblast/ :
 This folder contains the accessory scripts to create reciprocal blast based annotation
 
-1) run_rblast.sh : the wrapper script for running reciprocal blast
-2) rblast.sh : runs reciprocal blast
+**1) run_rblast.sh:** the wrapper script for running reciprocal blast
+**2) rblast.sh:** runs reciprocal blast
 3) rblast_combine.py : merges forward and reverse blast to create reciprocal hits table.
 4) merge_reciprocal_hits.py : creates a union table of reciprocal blast hits from multiple species.
 5) extract_best_gname.py : creates a table with the best reciprocal hit that was used in annotating gene names
