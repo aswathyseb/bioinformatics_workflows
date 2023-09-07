@@ -1,3 +1,6 @@
+#
+# Pacbio genome assembly workflow
+#
 
 DATA ?= reads
 SUBREADS ?= ${DATA}/subreads.bam
