@@ -62,6 +62,7 @@ ${CANU_FA}:${CCS}
 >canu -p pacbio_canu genomeSize=23m -${DATA_TYPE} ${CCS} -d ${CANU_OUT}
 >cp ${CANU_OUT}/pacbio_canu.contigs.fasta ${CANU_FA} 
 
+# Assign names based on reference alignment
 ${CANU_V2}:${CANU_FA} ${REF}
 # Extract primary aligned contigs that has a aligned region% >CUTOFF
 >bash ${SRC}/assign.sh ${CANU_FA} ${REF} ${ASM_PREFIX} >${OUT}/17XNL_PSU_coverages.txt 
@@ -104,8 +105,8 @@ reverse_contigs:
 >samtools faidx ${OUT}//combined.fa -r ${OUT}/list.txt >${CANU_V3}
 >samtools faidx ${CANU_V3}
 
-api_mit_mod:
 # Circularization of API and keep one copy of MIT
+api_mit_mod:
 >bash ${SRC}/circularize.sh
 >bash ${SRC}/rearrange.sh
 >bash ${SRC}/mt_correct.sh
