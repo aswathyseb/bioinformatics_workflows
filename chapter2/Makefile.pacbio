@@ -43,7 +43,7 @@ usage::
 > @echo "#"
 > @echo "# Makefile.pacbio.mk: Create Pacbio genome assembly with canu"
 > @echo "#"
-> @echo "# make all READS=${DATA} GENOME_SIZE=${GENOME_SIZE} REF=${REF}"
+> @echo "# make canu_final READS=${DATA} GENOME_SIZE=${GENOME_SIZE} REF=${REF}"
 > @echo "#"
 > @echo "# READS : Data folder with pacbio subreads"
 > @echo "# GENOME_SIZE : Estimated genome size"
@@ -81,8 +81,6 @@ canu_asm:${CANU_FA}
 canu_final:${CANU_V2}
 >ls -l ${CANU_V2}
 
-all:${CANU_V2}
->ls -l ${CANU_V2}
 
 #
 # Below are the commands for additional modifications to the assembly.
