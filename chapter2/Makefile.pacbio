@@ -12,9 +12,21 @@ CANU_OUT ?= ${OUT}/canu_assembly
 CANU_FA ?= ${OUT}/17XNL_PSU_v1.fa
 ASM_PREFIX ?= 17XNL_PSU
 CANU_V2 ?= ${OUT}/17XNL_PSU_v2.fa
+CANU_V3 ?= ${OUT}/17XNL_PSU_v3.fa
+CANU_V4 ?= ${OUT}/17XNL_PSU_v4.fa
+
+BAM ?= bam
+CONS ?= cons
+CONS_FASTA ?= ${CONS}/cons2.fa.gz
+CONS_BAM ?= ${CONS}/cons2_17X_PLD.bam
+CONS_PILE ?= ${CONS}/pileup.txt
+ASM_IN ?=${OUT}/cons2.fa
+ASSEMBLY ?= ${OUT}/17XNL_PSU.fa
 
 REF ?= refs/Py17X_Genome.fasta
 SRC ?= src/pacbio_asm
+
+V2_BAM =${BAM}/$(notdir $(basename ${CANU_V2})).bam
 
 
 # Makefile customizations.
@@ -63,10 +75,44 @@ ccs:${CCS}
 canu_asm:${CANU_FA}
 >ls -l ${CANU_FA}
 
-asm_mod:${CANU_V2}
+canu_final:${CANU_V2}
 >ls -l ${CANU_V2}
 
 all:${CANU_V2}
 >ls -l ${CANU_V2}
+
+#
+# Below are the commands for additional modifications to the assembly.
+# Some of the steps required manual intervention and checking.
+#
+
+# Reverse the contigs
+reverse_contigs:
+>mkdir -p ${BAM}
+>make -f Makefile.common minimap2_asm INPUT=${CANU_V2} OUTPUT=${V2_BAM} 
+>samtools view -F 4 -f 16 ${V2_BAM} |cut -f 1 |sort| uniq >${OUT}/contigs_rev.txt
+>samtools view -F 4 -F 16 ${V2_BAM} |cut -f 1 |sort| uniq >${OUT}/contigs_fwd.txt
+# Check manually if some of the contigs to be reversed are also aligned in fwd and 
+# correct the fwd and reverse txt files accordingly.
+>seqtk subseq -l 60 ${CANU_V2} ${OUT}/contigs_fwd.txt >${OUT}/contigs_fwd.fa
+>seqtk subseq -l 60 ${CANU_V2} ${OUT}/contigs_rev.txt >${OUT}/tmp.fa
+>revseq -sequence ${OUT}/tmp.fa -outseq ${OUT}/contigs_rev.fa
+>cat ${OUT}/contigs_fwd.fa ${OUT}/contigs_rev.fa >${OUT}/combined.fa
+>cat ${CANU_V2}.fai |cut -f 1 >${OUT}/list.txt
+>seqtk subseq -l 60 ${CANU_V2} ${OUT}/list.txt >${OUT}/tmp.fa
+>samtools faidx ${OUT}//combined.fa -r ${OUT}/list.txt >${CANU_V3}
+>samtools faidx ${CANU_V3}
+
+api_mit_mod:
+# Circularization of API and keep one copy of MIT
+>bash ${SRC}/circularize.sh
+>bash ${SRC}/rearrange.sh
+>bash ${SRC}/mt_correct.sh
+
+# Generate consensus
+>make -f Makefile.cons GENOME=${REF} ASM_DENOVO=${CANU_V4} CONS_FASTA=${CONS_FASTA} CONS_PILE=${CONS_PILE} CONS_BAM=${CONS_BAM}
+
+# Genome soft masked for repeats with Tantan
+>make -f Makefile.commom mask_genome ASM_IN=${ASM_IN} ASSEMBLY=${ASSEMBLY}
 
 

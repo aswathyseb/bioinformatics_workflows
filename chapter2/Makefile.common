@@ -64,9 +64,11 @@ DIFFS ?=diffs
 DIFF_VCF ?=${DIFFS}/17XNL_PSU_to_17X_PLD.vcf
 
 ABAM=${BAM}/asm.bam
+
 CONS_FASTA ?= cons/cons2.fa.gz
 CONS_BAM ?= cons/cons2_17X_PLD.bam
 CONS_PILE ?= cons/pileup.txt
+CONS ?= $(dir ${CONS_FASTA})
 
 .PHONY: cons
 
@@ -81,7 +83,7 @@ cons:
 	#
 	# Generate consensus genome
 	#
-	mkdir -p cons
+	mkdir -p ${CONS}
 	minimap2 --secondary=no -ax asm5 -t ${CPU} ${GENOME} ${ASM_DENOVO} | samtools view -b -F 2048 -F 256 | samtools sort -@ 4 > ${ABAM}
 	#minimap2 -ax map-hifi -t ${CPU} ${GENOME} ${ASM_DENOVO}  | samtools sort -@ 4 > ${ABAM}
 	samtools index ${ABAM}
