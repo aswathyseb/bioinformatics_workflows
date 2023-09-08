@@ -43,7 +43,17 @@ MAKEFLAGS += --warn-undefined-variables --no-print-directory
 
 #Print usage.
 usage:
->@echo "make index align"
+> @echo "#"
+> @echo "# Aligns data to teh reference using bwa."
+> @echo "#"
+>@echo "make all REF=${REF}  LIB=${LIB} SAMPLE=${SAMPLE} R1=${R1} R2=${R2}"
+> @echo "#"
+> @echo "# REF    : Reference Genome"
+> @echo "# LIB    : Library type, PE or SE"
+> @echo "# SAMPLE : Sample name"
+> @echo "# R1     : Read1"
+> @echo "# R2     : Read2"
+> @echo "#"
 
 # Rule to create bwa index.
 ${IDX_FILE}: ${REF}
@@ -73,5 +83,10 @@ index: ${IDX_FILE}
 >ls -l ${IDX_FILE}
 
 # The align target depends on the BAM file.
-align: ${BAM}
+align: ${BAM}.bai
 >ls -l ${BAM}
+
+all: index align
+>ls -l ${IDX_FILE}
+>ls -l ${BAM}
+
