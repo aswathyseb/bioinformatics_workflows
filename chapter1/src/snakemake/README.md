@@ -43,11 +43,7 @@ To view all the commandline options
 
 To perform a dry-run
 
-    python src/ruffus/vcf.py -n 
-
-To perform a dry-run
-
-    snakemake -s src/snakemake/variants.smk -c 4 --config aln_dir=align -n
+    snakemake -s src/snakemake/variants.smk -n
 
 ### Sample sheet specification
 
