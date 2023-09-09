@@ -2,11 +2,17 @@
 # The reference genome.
 REF ?= refs/genome.fa
 
-# The alignment file.
-BAM ?= bam/S1.bam
+# Alignment folder.
+#ALIGN_DIR ?= results/bam
 
-# The variant file.
-VCF ?= results/vcf/$(notdir $(basename ${BAM})).vcf.gz
+# Sample name
+SAMPLE ?= S1
+
+# The alignment file.
+BAM ?= results/bam/${SAMPLE}.bam
+
+# VCf file
+VCF ?= results/vcf/${SAMPLE}.vcf.gz
 
 # Pileup flags
 PFLAG ?= -d 100
@@ -21,17 +27,21 @@ CFLAG ?= --ploidy 2
 MAKEFLAGS += --warn-undefined-variables --no-print-directory
 
 #Print usage.
-usage:
+bcftools_usage:
 > @echo "#"
 > @echo "# Calls variants using bcftools"
 > @echo "#"
->@echo "make vcf REF=${REF} BAM=${BAM}"
+>@echo "make vcf REF=${REF} SAMPLE=${SAMPLE} BAM=${BAM} VCF=vcf/${SAMPLE}.vcf.gz"
 > @echo "#"
-> @echo "# REF: Reference Genome"
-> @echo "# BAM: Alignment file"
+> @echo "# REF       : Reference Genome"
+> @echo "# SAMPLE    : Sample name"
+> @echo "# ALIGN_DIR : Alignment file"
+> @echo "# VCF       : Path to output vcf"
 > @echo "#"
 
-${VCF}: ${BAM} ${REF}
+
+${VCF}: ${BAM}.bai ${REF}
+> echo ${BAM}
 > mkdir -p $(dir $@)
 >bcftools mpileup ${PFLAG} -O u -f ${REF} ${BAM} | \
  bcftools call ${CFLAG} -mv -O u | \
@@ -41,7 +51,4 @@ ${VCF}.tbi: ${VCF}
 > bcftools index -t -f ${VCF}
 
 vcf: ${VCF}.tbi
-> @ls -lh ${VCF}
-
-all: vcf
 > @ls -lh ${VCF}
