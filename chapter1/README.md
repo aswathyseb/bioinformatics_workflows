@@ -17,7 +17,7 @@ For example, snakemake variant calling workflow can be invoked as
 
  Variant calling workflows included here are.
 
- 1. [Makefile Variant Caller](src/make/README.md)
+ 1. [Make Variant Caller](src/make/README.md)
  2. [Snakemake Variant Caller](src/snakemake/README.md)
  3. [Ruffus Variant Caller](src/ruffus/README.md)
 
