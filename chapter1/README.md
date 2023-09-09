@@ -16,9 +16,11 @@ For example, snakemake variant calling workflow can be invoked as
     `snakemake -s src/snakemake/variants.smk`
 
  Variant calling workflows included here are.
- 
- 1. [Ruffus Variant Caller](src/ruffus/README.md)
+
+ 1. [Makefile Variant Caller](src/make/README.md)
  2. [Snakemake Variant Caller](src/snakemake/README.md)
+ 3. [Ruffus Variant Caller](src/ruffus/README.md)
+
 
 
 
