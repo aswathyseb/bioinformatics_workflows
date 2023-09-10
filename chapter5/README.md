@@ -1,4 +1,4 @@
-## Chapter5 - DNA Marker Database for Metabarcoding
+## Chapter 5 - DNA Marker Database for Metabarcoding
 
 A tool for creating DNA marker database that can be customized to accommodate various organisms, taxa groups and marker sequences is available [here](https://github.com/aswathyseb/markerdb)
 
