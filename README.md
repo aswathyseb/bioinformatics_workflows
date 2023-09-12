@@ -1,6 +1,6 @@
 # bioinformatics_workflows
 
-This repository contains the workflows and scripts used in the dissertation titled
+This repository contains the workflows and tools developed in the dissertation titled
 
 **Advancing Genomic and Transcriptomic Knowledge Through Reproducible Bioinformatics Workflows**
 
