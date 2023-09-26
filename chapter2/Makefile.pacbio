@@ -112,7 +112,7 @@ api_mit_mod:
 >bash ${SRC}/mt_correct.sh
 
 # Generate consensus
->make -f Makefile.cons GENOME=${REF} ASM_DENOVO=${CANU_V4} CONS_FASTA=${CONS_FASTA} CONS_PILE=${CONS_PILE} CONS_BAM=${CONS_BAM}
+>make -f Makefile.common cons GENOME=${REF} ASM_DENOVO=${CANU_V4} CONS_FASTA=${CONS_FASTA} CONS_PILE=${CONS_PILE} CONS_BAM=${CONS_BAM}
 
 # Genome soft masked for repeats with Tantan
 >make -f Makefile.commom mask_genome ASM_IN=${ASM_IN} ASSEMBLY=${ASSEMBLY}
