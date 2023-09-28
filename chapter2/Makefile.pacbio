@@ -1,36 +1,80 @@
 #
 # Pacbio genome assembly workflow
 #
-
+# Data folder.
 DATA ?= reads
+
+# The subreads file.
 SUBREADS ?= ${DATA}/subreads.bam
+
+# The CCS bam file.
 CCSREADS ?= ${DATA}/ccs.bam
+
+# The CCS fasta file.
 CCS ?= ${DATA}/ccs.fq
+
+# The estimated genome size.
 GENOME_SIZE ?= 23m
+
+# The Pacbio data type.
 DATA_TYPE ?= pacbio-hifi
+
+# The number of CPUs to use.
 NCPU ?= 6
+
+# The minimum pass required for CCS generation.
 MIN_PASS ?= 3
+
+# Output assembly folder.
 OUT ?= asm
+
+# The canu assembler output folder.
 CANU_OUT ?= ${OUT}/canu_assembly
+
+# The canu assembled fasta file.
 CANU_FA ?= ${OUT}/17XNL_PSU_v1.fa
+
+# The assembly prefix.
 ASM_PREFIX ?= 17XNL_PSU
+
+# The assembly v2 fasta file.
 CANU_V2 ?= ${OUT}/17XNL_PSU_v2.fa
+
+# The assembly v3 fasta file.
 CANU_V3 ?= ${OUT}/17XNL_PSU_v3.fa
+
+# The assembly v4 fasta file.
 CANU_V4 ?= ${OUT}/17XNL_PSU_v4.fa
 
+# The bam folder.
 BAM ?= bam
+
+# The consensus folder.
 CONS ?= cons
+
+# The consensus fasta file.
 CONS_FASTA ?= ${CONS}/cons2.fa.gz
+
+# The consensus bam file.
 CONS_BAM ?= ${CONS}/cons2_17X_PLD.bam
+
+# The pileup file for consensus generation.
 CONS_PILE ?= ${CONS}/pileup.txt
+
+# The consensus fasta file.
 ASM_IN ?=${OUT}/cons2.fa
+
+# The final assembled fasta.
 ASSEMBLY ?= ${OUT}/17XNL_PSU.fa
 
+# The reference genome.
 REF ?= refs/Py17X_Genome.fasta
+
+# The folder with scripts.
 SRC ?= src/pacbio_asm
 
+# The assembly v2 bam file.
 V2_BAM =${BAM}/$(notdir $(basename ${CANU_V2})).bam
-
 
 # Print usage information.
 usage::
