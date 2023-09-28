@@ -5,7 +5,8 @@ import sys
 def store_names(fname):
     store = dict()
     for line in open(fname):
-        old, new = line.split("\t")
+        vals = line.split("\t")
+        old, new = vals[0], vals[-1]
         store[old.strip()] = new.strip()
     return store
 

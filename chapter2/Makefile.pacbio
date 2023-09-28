@@ -56,16 +56,16 @@ ${CANU_FA}:${CCS}
 	canu -p pacbio_canu genomeSize=23m -${DATA_TYPE} ${CCS} -d ${CANU_OUT}
 	cp ${CANU_OUT}/pacbio_canu.contigs.fasta ${CANU_FA}
 
-# Assign names based on reference alignment
+#
+# Assign chromosome names to contigs.
+# Contigs are first filtered to keep the target specific ones
+# with alignment length > CUTOFF
+# Chromosome names are then assigned based on the primary
+# alignment of contigs to the reference genome.
+#
 ${CANU_V2}:${CANU_FA} ${REF}
-	#
-	# Extract primary aligned contigs that has a aligned region% >CUTOFF
-	#
 	bash ${SRC}/assign.sh ${CANU_FA} ${REF} ${ASM_PREFIX} >${OUT}/17XNL_PSU_coverages.txt
 	cat ${OUT}/17XNL_PSU_coverages.txt |cut -f 1 >${OUT}/selected_contigs.txt
-	#
-	# Modify chromosome names.
-	#
 	seqtk subseq -l 60 ${CANU_FA} ${OUT}/selected_contigs.txt >${OUT}/selected_contigs.fa
 	python ${SRC}/modify_header.py ${OUT}/selected_contigs.fa ${OUT}/17XNL_PSU_coverages.txt |seqtk seq -A -l 60 > ${OUT}/17XNL_PSU_v2.fa
 	samtools faidx ${OUT}/17XNL_PSU_v2.fa
@@ -78,7 +78,6 @@ canu_asm:${CANU_FA}
 
 canu_final:${CANU_V2}
 	ls -l ${CANU_V2}
-
 
 #
 # Below are the commands for additional modifications to the assembly.

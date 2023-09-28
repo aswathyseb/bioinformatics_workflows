@@ -4,14 +4,11 @@
 # python3 setup.py install
 
 #
-# These commands trim any adapter sequences present in the raw nanopore reads.
+# These commands trim any adapter sequences present in the raw Nanopore reads.
 #
 
 # Nanopore reads
 READS ?= reads/nano_dna.fq.gz
-
-# Output folder
-OUT_DIR ?= trimmed
 
 # Trimmed output
 TRIM_OUT = trimed/trimmed.fq
@@ -28,11 +25,13 @@ usage::
 	@echo "#"
 
 # Trim adapter sequences from Nanopore data
+# and generate stats before and after trimming.
 ${TRIM_OUT}:${READS}
 	mkdir -p ${OUT_DIR}
 	porechop -i ${READS} -o ${TRIM_OUT} 1>${OUT_DIR}/porechop.log
-	#Generate stats before and after trimming
 	seqkit stats ${READS} ${TRIM_OUT} >${OUT_DIR}/read_stats.txt
 
+
+# The trim target depends On trimmed output file.
 trim:${TRIM_OUT}
 	ls -l ${TRIM_OUT}
