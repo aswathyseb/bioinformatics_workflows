@@ -54,35 +54,40 @@ usage::
 	@echo "# The final output is assembly_polished.fa in the polish directory."
 	@echo "#"
 
-# Trim adapter sequences
+# Trim adapter sequences.
 ${TRIM_OUT}:${READS}
 	make -f ${SRC}/porechop.mk READS=${READS} TRIM_OUT=${TRIM_OUT} trim
 
-# De novo assembly with Flye
+# De novo assembly with Flye.
 ${FLYE_OUT}:${TRIM_OUT}
 	make -f ${SRC}/flye.mk READS=${TRIM_OUT} GENOME_SIZE=${GENOME_SIZE} OUT=${FLYE_DIR} RTYPE=nano-corr assembly
 
-# Scaffold the assembly
+# Scaffold the assembly.
 ${SCAFF}: ${REF} ${FLYE_OUT}
 	make -f ${SRC}/scaffold.mk ASM=${FLYE_OUT} REF=${REF} OUT=${SCAF_DIR} scaffold
 
-# Run the script to perform polishing with Illumina
+# Perform polishing with Illumina.
 ${POLISH_FA}:${SCAFF} ${R1} ${R2} ${REF}
 	python $(SRC)/multi_polish.py ${POLISH_DIR} ${SCAFF} ${R1} ${R2} ${REF} >multi_polish.sh
 	bash multi_polish.sh
 
+# The trim target depends on the trimmed file.
 trim:${TRIM_OUT}
 	ls -l ${TRIM_OUT}
 
+# The assembly target depends on flye output file.
 assembly:${FLYE_OUT}
 	ls -l ${FLYE_OUT}
 
+# The scaffold target depends on scaffold fasta file.
 scaffold:${SCAFF}
 	ls -l ${SCAFF}
 
+# The polish target depends on polished assembly file.
 polish:${POLISH_FA}
 	ls -l ${POLISH_FA}
 
+# Rule to run all commands.
 all: trim assembly scaffold polish
 	echo "Done!"
 
