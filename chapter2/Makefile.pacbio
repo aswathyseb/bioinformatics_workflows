@@ -145,7 +145,10 @@ reverse_contigs:
 	samtools faidx ${OUT}//combined.fa -r ${OUT}/list.txt >${CANU_V3}
 	samtools faidx ${CANU_V3}
 
+#
 # Circularization of API and keep one copy of MIT
+# followed by consensus generation and repeat masking.
+
 api_mit_mod:
 	bash ${SRC}/circularize.sh
 	bash ${SRC}/rearrange.sh
