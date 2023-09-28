@@ -27,25 +27,18 @@ CPU = 12
 #FLAGS = --scaffold
 FLAGS =
 
-# Makefile customizations.
-.RECIPEPREFIX = >
-.DELETE_ON_ERROR:
-.ONESHELL:
-MAKEFLAGS += --warn-undefined-variables --no-print-directory
-
 # Print usage information.
 usage::
-> @echo "#"
-> @echo "# flye.mk: Create genome assembly using Flye asssembler"
-> @echo "#"
-> @echo "# make assembly READS=${READS} GENOME_SIZE=${GSIZE} OUT=${OUT} RTYPE=${RTYPE}"
-> @echo "#"
+	@echo "#"
+	@echo "# flye.mk: Create genome assembly using Flye asssembler"
+	@echo "#"
+	@echo "# make assembly READS=${READS} GENOME_SIZE=${GSIZE} OUT=${OUT} RTYPE=${RTYPE}"
+	@echo "#"
 
 #Flye assembler
-#
 ${ASM}:${READS}
->mkdir -p ${OUT}
->flye --nano-corr ${READS} --out-dir ${OUT} --genome-size ${GSIZE} -t ${CPU} ${FLAGS}
+	mkdir -p ${OUT}
+	flye --nano-corr ${READS} --out-dir ${OUT} --genome-size ${GSIZE} -t ${CPU} ${FLAGS}
 
 assembly:${ASM}
->ls -l ${ASM}
+	ls -l ${ASM}

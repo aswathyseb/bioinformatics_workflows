@@ -39,55 +39,50 @@ SCAFF =${SCAF_DIR}/ragtag.scaffold.fasta
 # Final polished fasta
 POLISH_FA =${POLISH_DIR}/assembly_polished.fa
 
-# Makefile customizations.
-.RECIPEPREFIX = >
-.DELETE_ON_ERROR:
-.ONESHELL:
-MAKEFLAGS += --warn-undefined-variables --no-print-directory
-
 # Print usage information.
 usage::
-> @echo "#"
-> @echo "# Makefile.ont.mk: Create Nanopore-Illumina hybrid genome assembly"
-> @echo "#"
-> @echo "# make all READS=${READS} GENOME_SIZE=${GENOME_SIZE} R1=${R1} R2=${R2} REF=${REF}"
-> @echo "#"
-> @echo "# READS : Nanopore reads"
-> @echo "# R1,R2 : Illumina reads"
-> @echo "# GENOME_SIZE : Estimated genome size"
-> @echo "# REF: Reference genome (used for polishing)"
-> @echo "# "
-> @echo "# The final output is assembly_polished.fa in the polish directory."
-> @echo "#"
+	@echo "#"
+	@echo "# Makefile.ont.mk: Create Nanopore-Illumina hybrid genome assembly"
+	@echo "#"
+	@echo "# make all READS=${READS} GENOME_SIZE=${GENOME_SIZE} R1=${R1} R2=${R2} REF=${REF}"
+	@echo "#"
+	@echo "# READS : Nanopore reads"
+	@echo "# R1,R2 : Illumina reads"
+	@echo "# GENOME_SIZE : Estimated genome size"
+	@echo "# REF: Reference genome (used for polishing)"
+	@echo "# "
+	@echo "# The final output is assembly_polished.fa in the polish directory."
+	@echo "#"
 
 # Trim adapter sequences
 ${TRIM_OUT}:${READS}
->make -f ${SRC}/porechop.mk READS=${READS} TRIM_OUT=${TRIM_OUT} trim
+	make -f ${SRC}/porechop.mk READS=${READS} TRIM_OUT=${TRIM_OUT} trim
 
 # De novo assembly with Flye
 ${FLYE_OUT}:${TRIM_OUT}
->make -f ${SRC}/flye.mk READS=${TRIM_OUT} GENOME_SIZE=${GENOME_SIZE} OUT=${FLYE_DIR} RTYPE=nano-corr assembly
+	make -f ${SRC}/flye.mk READS=${TRIM_OUT} GENOME_SIZE=${GENOME_SIZE} OUT=${FLYE_DIR} RTYPE=nano-corr assembly
 
 # Scaffold the assembly
 ${SCAFF}: ${REF} ${FLYE_OUT}
->make -f ${SRC}/scaffold.mk ASM=${FLYE_OUT} REF=${REF} OUT=${SCAF_DIR} scaffold
+	make -f ${SRC}/scaffold.mk ASM=${FLYE_OUT} REF=${REF} OUT=${SCAF_DIR} scaffold
 
-#Run the script to perform polishing with Illumina
+# Run the script to perform polishing with Illumina
 ${POLISH_FA}:${SCAFF} ${R1} ${R2} ${REF}
->python $(SRC)/multi_polish.py ${POLISH_DIR} ${SCAFF} ${R1} ${R2} ${REF} >multi_polish.sh
->bash multi_polish.sh
+	python $(SRC)/multi_polish.py ${POLISH_DIR} ${SCAFF} ${R1} ${R2} ${REF} >multi_polish.sh
+	bash multi_polish.sh
 
 trim:${TRIM_OUT}
->ls -l ${TRIM_OUT}
+	ls -l ${TRIM_OUT}
 
 assembly:${FLYE_OUT}
->ls -l ${FLYE_OUT}
+	ls -l ${FLYE_OUT}
 
 scaffold:${SCAFF}
-> ls -l ${SCAFF}
+	ls -l ${SCAFF}
 
 polish:${POLISH_FA}
->ls -l ${POLISH_FA}
+	ls -l ${POLISH_FA}
 
 all: trim assembly scaffold polish
->echo "Done!"
+	echo "Done!"
+
